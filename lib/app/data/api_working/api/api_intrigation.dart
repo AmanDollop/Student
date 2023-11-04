@@ -11,7 +11,7 @@ class ApiIntegration{
     required BuildContext context,
   }) async {
     http.Response? response = await MyHttp.postMethod(
-      url: 'ApiConstants.endPointSignUpApi',
+      url: ApiUrlCont.endPointAddTeacher,
       bodyParams: bodyParams,
       context: context,
     );
@@ -31,5 +31,17 @@ class ApiIntegration{
       return null;
     }
   }
+
+}
+
+class ApiUrlCont{
+
+  static String endPointAddTeacher = 'addTeacher';
+  static String endPointAetAllClasses = 'getAllClasses';
+  static String endPointAetStudentAttendance = 'getStudentAttandance';
+  static String endPointAddClass = 'addClass';
+  static String endPointAddStudent = 'addStudent';
+  static String endPointAetClassById = 'getClassById';
+  static String endPointAddAttendance = 'addAttendance';
 
 }
