@@ -157,6 +157,8 @@ class CommonWidgets {
               width: 22.px,
               child: CircularProgressIndicator(
                 strokeWidth: 4.px,
+                backgroundColor: Colors.grey,
+                color: Colors.white,
               ),
             )
           : child ?? Text(

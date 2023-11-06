@@ -15,64 +15,80 @@ class StudentListView extends GetView<StudentListController> {
         title: const Text('Students'),
         centerTitle: true,
       ),
-      body: Stack(
-        alignment: Alignment.bottomCenter,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(bottom: 80.px),
-            child: ListView.builder(
-                padding:
-                EdgeInsets.symmetric(horizontal: 14.px, vertical: 18.px),
-                itemBuilder: (context, index) => Container(
-                  height: 50,
-                  margin: EdgeInsets.symmetric(vertical: 4.px),
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.blue),
-                      borderRadius: BorderRadius.circular(8.px)),
-                  child: InkWell(
-                    onTap: () => controller.clickOnStudent(index: index),
-                    borderRadius: BorderRadius.circular(8.px),
-                    splashColor: Colors.blue.withOpacity(.2),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 12.px),
-                      child: Row(
-                        children: [
-                          Text(
-                            'Student Name -:',
-                            style: TextStyle(
-                                fontSize: 16.px,
-                                color: Colors.grey,
-                                fontWeight: FontWeight.w600),
+      body: Obx(() {
+        controller.count.value;
+        if(controller.data != null){
+           return Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(bottom: 80.px),
+                child: controller.students != null && controller.students!.isNotEmpty?
+                ListView.builder(
+                    padding: EdgeInsets.symmetric(horizontal: 14.px, vertical: 18.px),
+                    itemBuilder: (context, index) => Container(
+                      height: 50,
+                      margin: EdgeInsets.symmetric(vertical: 4.px),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.blue),
+                          borderRadius: BorderRadius.circular(8.px)),
+                      child: InkWell(
+                        onTap: () => controller.clickOnStudent(index: index),
+                        borderRadius: BorderRadius.circular(8.px),
+                        splashColor: Colors.blue.withOpacity(.2),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 12.px),
+                          child: Row(
+                            children: [
+                              Text(
+                                'Student Name -:',
+                                style: TextStyle(
+                                    fontSize: 16.px,
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              SizedBox(width: 25.px),
+                              Text(
+                                '${controller.students?[index].studentName}',
+                                style: TextStyle(
+                                    fontSize: 14.px,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w800),
+                              ),
+                            ],
                           ),
-                          SizedBox(width: 25.px),
-                          Text(
-                            'Student Name',
-                            style: TextStyle(
-                                fontSize: 14.px,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w800),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: controller.students?.length)
+                    :Text(
+                  'No Student Found!',
+                  style: TextStyle(fontSize: 20.px, color: Colors.black),
                 ),
-                physics: const BouncingScrollPhysics(),
-                itemCount: 50),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.px, vertical: 24.px),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CommonWidgets.myElevatedButton(onPressed: () => controller.clickOnStartAttendanceButton(), text: 'Start Attendance',width: 42.w,backgroundColor: Colors.orange),
-                SizedBox(width: 20.px),
-                CommonWidgets.myElevatedButton(onPressed: () => controller.clickOnAddStudentButton(), text: 'Add Student',width: 42.w,backgroundColor: Colors.red),
-              ],
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.px, vertical: 24.px),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CommonWidgets.myElevatedButton(onPressed: () => controller.clickOnStartAttendanceButton(), text: 'Start Attendance',width: 42.w,backgroundColor: Colors.orange),
+                    SizedBox(width: 20.px),
+                    CommonWidgets.myElevatedButton(onPressed: () => controller.clickOnAddStudentButton(), text: 'Add Student',width: 42.w,backgroundColor: Colors.red),
+                  ],
+                ),
+              )
+            ],
+          );
+        }else{
+          return Center(
+            child: Text(
+              'Something Went Wrong',
+              style: TextStyle(fontSize: 20.px, color: Colors.black),
             ),
-          )
-        ],
-      ),
+          );
+        }
+      }),
     );
   }
 }
