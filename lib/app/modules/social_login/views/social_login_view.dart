@@ -16,8 +16,15 @@ class SocialLoginView extends GetView<SocialLoginController> {
       return Scaffold(
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.px, vertical: 24.px),
-          child: Center(
-            child: Column(
+          child:  Center(
+            child:SizedBox(
+              height: 200.px,
+              width: 200.px,
+              child: const CircleAvatar(
+                backgroundImage: AssetImage('assets/svc_logo.jpeg'),
+              ),
+            )
+            /*Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -42,7 +49,7 @@ class SocialLoginView extends GetView<SocialLoginController> {
                     width: 120.px,
                     height: 35.px)
               ],
-            ),
+            ),*/
           ),
         ),
       );

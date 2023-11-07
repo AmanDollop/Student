@@ -28,7 +28,7 @@ class StudentDetailsView extends GetView<StudentDetailsController> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Student Name',
+                      Text('Date',
                           style: TextStyle(
                               fontSize: 18.px,
                               color: Colors.black,
@@ -53,12 +53,12 @@ class StudentDetailsView extends GetView<StudentDetailsController> {
                         padding: EdgeInsets.symmetric(
                             horizontal: 14.px, vertical: 18.px),
                         itemBuilder: (context, index) => Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 12.px, vertical: 5.px),
+                          padding: EdgeInsets.symmetric(vertical: 5.px),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Expanded(
+                                flex: 5,
                                 child: Text(
                                   '${controller.studentName[index]}',
                                   style: TextStyle(
@@ -68,7 +68,9 @@ class StudentDetailsView extends GetView<StudentDetailsController> {
                                 ),
                               ),
                               Expanded(
+                                flex: 7,
                                 child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                                   children: [
                                     Container(
                                       width: 30.px,
@@ -151,16 +153,16 @@ class StudentDetailsView extends GetView<StudentDetailsController> {
                         'Presents',
                         style: TextStyle(
                             fontWeight: FontWeight.w800,
-                            fontSize: 18.px,
+                            fontSize: 20.px,
                             color: Colors.black),
                       ),
                       SizedBox(height: 10.px),
                       Text(
-                        '50',
+                        '03',
                         style: TextStyle(
                             fontWeight: FontWeight.w800,
-                            fontSize: 14.px,
-                            color: Colors.black),
+                            fontSize: 18.px,
+                            color: Colors.green),
                       ),
                     ],
                   ),
@@ -170,16 +172,16 @@ class StudentDetailsView extends GetView<StudentDetailsController> {
                         'Absents',
                         style: TextStyle(
                             fontWeight: FontWeight.w800,
-                            fontSize: 18.px,
+                            fontSize: 20.px,
                             color: Colors.black),
                       ),
                       SizedBox(height: 10.px),
                       Text(
-                        '50',
+                        '02',
                         style: TextStyle(
                             fontWeight: FontWeight.w800,
-                            fontSize: 14.px,
-                            color: Colors.black),
+                            fontSize: 18.px,
+                            color: Colors.red),
                       ),
                     ],
                   ),
@@ -189,16 +191,16 @@ class StudentDetailsView extends GetView<StudentDetailsController> {
                         'Total Days',
                         style: TextStyle(
                             fontWeight: FontWeight.w800,
-                            fontSize: 18.px,
+                            fontSize: 20.px,
                             color: Colors.black),
                       ),
                       SizedBox(height: 10.px),
                       Text(
-                        '100',
+                        '05',
                         style: TextStyle(
                             fontWeight: FontWeight.w800,
-                            fontSize: 14.px,
-                            color: Colors.black),
+                            fontSize: 18.px,
+                            color: Colors.blue),
                       ),
                     ],
                   ),

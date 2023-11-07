@@ -24,7 +24,8 @@ class LoginView extends GetView<LoginController> {
               Form(
                 key: controller.key,
                 child: ListView(
-                  padding: EdgeInsets.symmetric(horizontal: 16.px, vertical: 24.px),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 16.px, vertical: 24.px),
                   children: [
                     SizedBox(height: 50.px),
                     Text(
@@ -41,7 +42,8 @@ class LoginView extends GetView<LoginController> {
                       hintText: 'Enter Name',
                       iconVisible: true,
                       inputType: TextInputType.name,
-                      validator: (value) => FormValidator.isNameValid(value: value),
+                      validator: (value) =>
+                          FormValidator.isNameValid(value: value),
                       controller: controller.nameController,
                     ),
                     SizedBox(height: 10.px),
@@ -65,32 +67,48 @@ class LoginView extends GetView<LoginController> {
                             FormValidator.isNumberValid(value: value)),
                     SizedBox(height: 10.px),
                     CommonWidgets.myTextField(
+                      labelText: 'Enter Your Subject Name',
+                      hintText: 'Enter Your Subject Name',
+                      iconVisible: true,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter subject name';
+                        }
+                        return null;
+                      },
+                      maxLength: 10,
+                      controller: controller.subjectController,
+                    ),
+                    SizedBox(height: 10.px),
+                    CommonWidgets.myTextField(
                         labelText: 'Enter Password',
                         hintText: 'Enter Password',
                         iconVisible: true,
                         controller: controller.passwordController,
-                        validator: (value) => FormValidator.isPasswordValid(value: value)),
+                        validator: (value) =>
+                            FormValidator.isPasswordValid(value: value)),
                     SizedBox(height: 10.px),
                     CommonWidgets.myTextField(
                         labelText: 'Re-Enter Password',
                         hintText: 'Re-Enter Password',
                         iconVisible: true,
                         controller: controller.confirmPasswordController,
-                        validator: (value) => FormValidator.isConfirmPasswordValid(
-                            value: value,
-                            password: controller.passwordController.text)),
+                        validator: (value) =>
+                            FormValidator.isConfirmPasswordValid(
+                                value: value,
+                                password: controller.passwordController.text)),
                   ],
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.px, vertical: 24.px),
+                padding:
+                    EdgeInsets.symmetric(horizontal: 16.px, vertical: 24.px),
                 child: CommonWidgets.myElevatedButton(
                     text: 'LogIn',
-                    onPressed: !controller.checkApiResponseValue.value?
-                        () => controller.clickOnLogInButton()
-                        :() => null,
-                    progressBarValue: controller.checkApiResponseValue.value
-                ),
+                    onPressed: !controller.checkApiResponseValue.value
+                        ? () => controller.clickOnLogInButton()
+                        : () => null,
+                    progressBarValue: controller.checkApiResponseValue.value),
               ),
             ],
           ),

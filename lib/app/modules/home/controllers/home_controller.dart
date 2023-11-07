@@ -5,19 +5,25 @@ import 'package:attendance_application/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
+
   final count = 0.obs;
 
   final id = ''.obs;
+
   final classModel = Rxn<ClassModel>();
   List<Data>? data;
   Map<String, dynamic> queryParametersForClass = {};
 
+  final inAsyncCall = true.obs;
+
   @override
   Future<void> onInit() async {
     super.onInit();
+    inAsyncCall.value = true;
     id.value = await CommonMethods.getString(key: 'id') ?? '';
     print('id::::::::::::::::   $id');
     await getClassApi();
+    inAsyncCall.value = false;
   }
 
   @override
@@ -33,6 +39,7 @@ class HomeController extends GetxController {
   void increment() => count.value++;
 
   void clickOnClass({required int index}) {
+    print('data?[index].classId::::::::::::    ${data?[index].classId}');
     Get.toNamed(Routes.STUDENT_LIST,arguments: [data?[index].classId]);
   }
 
@@ -50,9 +57,11 @@ class HomeController extends GetxController {
           });
       if (classModel.value != null) {
         data = classModel.value?.data;
+        inAsyncCall.value=false;
         print('data::::::   $data');
       }
     } catch (e) {
+      inAsyncCall.value=false;
       print('ApiError::::   $e');
     }
   }

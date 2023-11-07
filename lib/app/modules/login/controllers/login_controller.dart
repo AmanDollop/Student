@@ -15,6 +15,7 @@ class LoginController extends GetxController {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final mobileNumberController = TextEditingController();
+  final subjectController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 

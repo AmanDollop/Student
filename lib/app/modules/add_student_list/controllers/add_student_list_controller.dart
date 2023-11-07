@@ -10,7 +10,7 @@ class AddStudentListController extends GetxController {
 
   final count = 0.obs;
   final id = ''.obs;
-  String? classId;
+  int? classId;
   final studentController =TextEditingController();
   final key = GlobalKey<FormState>();
 

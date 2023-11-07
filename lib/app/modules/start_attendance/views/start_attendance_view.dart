@@ -1,3 +1,4 @@
+import 'package:attendance_application/app/data/common_files/common_methods/Progress_bar.dart';
 import 'package:attendance_application/app/data/common_files/common_widgets/common_widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -18,144 +19,189 @@ class StartAttendanceView extends GetView<StartAttendanceController> {
       ),
       body: Obx(() {
         controller.count.value;
-        return Stack(
-          alignment: Alignment.bottomCenter,
-          children: [
-            Column(
-              children: [
-                Padding(
-                  padding:
-                  EdgeInsets.symmetric(horizontal: 12.px, vertical: 10.px),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Student Name',
-                          style: TextStyle(
-                              fontSize: 18.px,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w800)),
-                      Text('Present',
-                          style: TextStyle(
-                              fontSize: 18.px,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w800)),
-                      Text('Absent',
-                          style: TextStyle(
-                              fontSize: 18.px,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w800)),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(bottom: 80.px),
-                    child: ListView.builder(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 14.px, vertical: 18.px),
-                        itemBuilder: (context, index) => Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 12.px, vertical: 5.px),
+        return ProgressBarForChat(
+          inAsyncCall: controller.inAsyncCall.value,
+          child: controller.studentModel.value != null
+              ? Stack(
+                  alignment: Alignment.bottomCenter,
+                  children: [
+                    Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 12.px, vertical: 10.px),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Expanded(
-                                child: Text(
-                                  '${controller.studentName[index]}',
+                              Text('Student Name',
                                   style: TextStyle(
-                                      fontSize: 14.px,
+                                      fontSize: 18.px,
                                       color: Colors.black,
-                                      fontWeight: FontWeight.w800),
-                                ),
-                              ),
-                              Expanded(
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      width: 30.px,
-                                      height: 30.px,
-                                      decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          border: Border.all(
-                                              color: Colors.grey,
-                                              width: 2.px)),
-                                      child: Padding(
-                                        padding: EdgeInsets.all(2.px),
-                                        child: InkWell(
-                                          onTap: () {
-                                            controller.studentAttendanceList[index] = 'P';
-                                            print('controller.studentAttendanceList[index]::::::::::::::::::::     ${controller.studentAttendanceList}');
-                                          },
-                                          child: Container(
-                                            width: 25.px,
-                                            height: 25.px,
-                                            decoration:  BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color:controller.studentAttendanceList[index] == 'P' ?Colors.green:Colors.transparent,
-                                            ),
-                                            child: Center(
-                                              child: Text(
-                                                controller.attendType[0].toString(),
-                                                style: TextStyle(
-                                                    fontSize: 12.px,
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.w800),),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(width: 25.w),
-                                    Container(
-                                      width: 30.px,
-                                      height: 30.px,
-                                      decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          border: Border.all(color: Colors.grey, width: 2.px)),
-                                      child: Padding(
-                                        padding: EdgeInsets.all(2.px),
-                                        child: InkWell(
-                                          onTap: () {
-                                            controller.studentAttendanceList[index] = 'A';
-                                          },
-                                          child: Container(
-                                            width: 25.px,
-                                            height: 25.px,
-                                            decoration:  BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: controller.studentAttendanceList[index] == 'A' ?Colors.red:Colors.transparent,
-                                            ),
-                                            child: Center(
-                                              child: Text(
-                                                controller.attendType[1].toString(),
-                                                style: TextStyle(
-                                                    fontSize: 12.px,
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.w800),),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
+                                      fontWeight: FontWeight.w800)),
+                              Text('Present',
+                                  style: TextStyle(
+                                      fontSize: 18.px,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w800)),
+                              Text('Absent',
+                                  style: TextStyle(
+                                      fontSize: 18.px,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w800)),
                             ],
                           ),
                         ),
-                        physics: const BouncingScrollPhysics(),
-                        itemCount: controller.studentName.length),
+                        controller.studentsList != null &&
+                                controller.studentsList!.isNotEmpty
+                            ? Expanded(
+                                child: Padding(
+                                  padding: EdgeInsets.only(bottom: 80.px),
+                                  child: Obx(() {
+                                    controller.count.value;
+                                    return ListView.builder(
+                                        padding: EdgeInsets.symmetric(horizontal: 14.px, vertical: 18.px),
+                                        itemBuilder:
+                                            (context, index) => Padding(
+                                                  padding: EdgeInsets.symmetric(horizontal: 12.px, vertical: 5.px),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    children: [
+                                                      Expanded(
+                                                        child: Text(
+                                                          '${controller.studentsList?[index].studentName}',
+                                                          style: TextStyle(
+                                                              fontSize: 14.px,
+                                                              color: Colors.black,
+                                                              fontWeight: FontWeight.w800),
+                                                        ),
+                                                      ),
+                                                      Obx(() {
+                                                        controller.count.value;
+                                                        return Expanded(
+                                                          child: Row(
+                                                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                            children: [
+                                                              Container(
+                                                                width: 30.px,
+                                                                height: 30.px,
+                                                                decoration: BoxDecoration(
+                                                                    shape: BoxShape.circle,
+                                                                    border: Border.all(color: Colors.grey, width: 2.px)),
+                                                                child: Padding(
+                                                                  padding: EdgeInsets.all(2.px),
+                                                                  child: InkWell(
+                                                                    onTap: () {
+
+
+                                                                      //
+                                                                      // if(controller.studentAttendanceList[index].contains(controller.attendType[index])) {
+                                                                      //   print('111111111111111');
+                                                                      // }else{
+                                                                      //   print('222222222222222222');
+                                                                      //
+                                                                      // }
+
+                                                                      controller.studentAttendanceList[index] = 'P';
+                                                                      Map<String, dynamic>test = {"${controller.studentsList?[index].studentId}": true};
+                                                                      controller.test1 = test;
+                                                                      controller.studentAttendanceListMap.add(test);
+
+                                                                      print('controller.studentAttendanceListMap:::: True:::   ${controller.studentAttendanceListMap}');
+                                                                    },
+                                                                    child: Container(
+                                                                      width: 25.px,
+                                                                      height: 25.px,
+                                                                      decoration: BoxDecoration(
+                                                                        shape: BoxShape.circle,
+                                                                        color: controller.studentAttendanceList[index] == 'P'? Colors.green: Colors.transparent,
+                                                                      ),
+                                                                      child:
+                                                                          Center(
+                                                                        child: Text(
+                                                                          controller.attendType[0].toString(),
+                                                                          style: TextStyle(
+                                                                              fontSize: 12.px,
+                                                                              color: Colors.black,
+                                                                              fontWeight: FontWeight.w800),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              SizedBox(width: 25.w),
+                                                              Container(
+                                                                width: 30.px,
+                                                                height: 30.px,
+                                                                decoration: BoxDecoration(
+                                                                    shape: BoxShape.circle,
+                                                                    border: Border.all(color: Colors.grey, width: 2.px)),
+                                                                child: Padding(
+                                                                  padding: EdgeInsets.all(2.px),
+                                                                  child: InkWell(
+                                                                    onTap: () {controller.studentAttendanceList[index] = 'A';
+
+                                                                      Map<String, dynamic>test = {"${controller.studentsList?[index].studentId}": false};
+                                                                      controller.studentAttendanceListMap.add(test);
+
+                                                                      print('controller.studentAttendanceListMap :: False:::::   ${controller.studentAttendanceListMap}');
+                                                                    },
+                                                                    child: Container(
+                                                                      width: 25.px,
+                                                                      height: 25.px,
+                                                                      decoration: BoxDecoration(
+                                                                        shape: BoxShape.circle,
+                                                                        color: controller.studentAttendanceList[index] == 'A'? Colors.red: Colors.transparent,
+                                                                      ),
+                                                                      child: Center(
+                                                                        child: Text(
+                                                                          controller.attendType[1].toString(),
+                                                                          style: TextStyle(fontSize: 12.px, color: Colors.black, fontWeight: FontWeight.w800),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        );
+                                                      })
+                                                    ],
+                                                  ),
+                                                ),
+                                        physics: const BouncingScrollPhysics(),
+                                        itemCount: controller.studentsList?.length);
+                                  }),
+                                ),
+                              )
+                            : Center(
+                                child: Text(
+                                  controller.inAsyncCall.value
+                                      ? ''
+                                      : 'Data Not Found!',
+                                  style: TextStyle(
+                                      fontSize: 20.px, color: Colors.black),
+                                ),
+                              ),
+                      ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 16.px, vertical: 24.px),
+                      child: CommonWidgets.myElevatedButton(
+                        onPressed: !controller.checkApiResponseValue.value?() => controller.clickOnSubmitAttendance():() => null,
+                        text: 'Submit Attendance',
+                        progressBarValue: controller.checkApiResponseValue.value
+                      ),
+                    )
+                  ],
+                )
+              : Center(
+                  child: Text(
+                    controller.inAsyncCall.value ? '' : 'Something Went Wrong',
+                    style: TextStyle(fontSize: 20.px, color: Colors.black),
                   ),
                 ),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.px, vertical: 24.px),
-              child: CommonWidgets.myElevatedButton(
-                  onPressed: () => controller.clickOnSubmitAttendance(),
-                  text: 'Submit Attendance'),
-            )
-          ],
         );
       }),
     );

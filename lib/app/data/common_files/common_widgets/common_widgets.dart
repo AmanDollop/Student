@@ -144,7 +144,7 @@ class CommonWidgets {
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         shape: BeveledRectangleBorder(
-          borderRadius: BorderRadius.circular(borderRadius ?? 25.px),
+          borderRadius: BorderRadius.circular(borderRadius ?? 15.px),
         ),
         minimumSize: Size(width ?? double.infinity, height ?? 46.px),
         shadowColor: Colors.transparent,

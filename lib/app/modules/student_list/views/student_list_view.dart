@@ -1,3 +1,4 @@
+import 'package:attendance_application/app/data/common_files/common_methods/Progress_bar.dart';
 import 'package:attendance_application/app/data/common_files/common_widgets/common_widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -17,77 +18,75 @@ class StudentListView extends GetView<StudentListController> {
       ),
       body: Obx(() {
         controller.count.value;
-        if(controller.data != null){
-           return Stack(
-            alignment: Alignment.bottomCenter,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(bottom: 80.px),
-                child: controller.students != null && controller.students!.isNotEmpty?
-                ListView.builder(
-                    padding: EdgeInsets.symmetric(horizontal: 14.px, vertical: 18.px),
-                    itemBuilder: (context, index) => Container(
-                      height: 50,
-                      margin: EdgeInsets.symmetric(vertical: 4.px),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.blue),
-                          borderRadius: BorderRadius.circular(8.px)),
-                      child: InkWell(
-                        onTap: () => controller.clickOnStudent(index: index),
-                        borderRadius: BorderRadius.circular(8.px),
-                        splashColor: Colors.blue.withOpacity(.2),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 12.px),
-                          child: Row(
-                            children: [
-                              Text(
-                                'Student Name -:',
-                                style: TextStyle(
-                                    fontSize: 16.px,
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                              SizedBox(width: 25.px),
-                              Text(
-                                '${controller.students?[index].studentName}',
-                                style: TextStyle(
-                                    fontSize: 14.px,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w800),
-                              ),
-                            ],
-                          ),
+        return ProgressBarForChat(inAsyncCall: controller.inAsyncCall.value, child: Stack(
+          alignment: Alignment.bottomCenter,
+          children: [
+            controller.studentModel.value != null? Padding(
+              padding: EdgeInsets.only(bottom: 80.px),
+              child: controller.studentsList != null && controller.studentsList!.isNotEmpty?
+              ListView.builder(
+                  padding: EdgeInsets.symmetric(horizontal: 14.px, vertical: 18.px),
+                  itemBuilder: (context, index) => Container(
+                    height: 50,
+                    margin: EdgeInsets.symmetric(vertical: 4.px),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.blue),
+                        borderRadius: BorderRadius.circular(8.px),),
+                    child: InkWell(
+                      onTap: () => controller.clickOnStudent(index: index),
+                      borderRadius: BorderRadius.circular(8.px),
+                      splashColor: Colors.blue.withOpacity(.2),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 12.px),
+                        child: Row(
+                          children: [
+                            Text(
+                              'Student Name -:',
+                              style: TextStyle(
+                                  fontSize: 16.px,
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            SizedBox(width: 25.px),
+                            Text(
+                              '${controller.studentsList?[index].studentName}',
+                              style: TextStyle(
+                                  fontSize: 14.px,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w800),
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: controller.students?.length)
-                    :Text(
-                  'No Student Found!',
+                  ),
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: controller.studentsList?.length)
+                  :Center(
+                child: Text(
+                  controller.inAsyncCall.value?'':'No Student Found!',
                   style: TextStyle(fontSize: 20.px, color: Colors.black),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.px, vertical: 24.px),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CommonWidgets.myElevatedButton(onPressed: () => controller.clickOnStartAttendanceButton(), text: 'Start Attendance',width: 42.w,backgroundColor: Colors.orange),
-                    SizedBox(width: 20.px),
-                    CommonWidgets.myElevatedButton(onPressed: () => controller.clickOnAddStudentButton(), text: 'Add Student',width: 42.w,backgroundColor: Colors.red),
-                  ],
-                ),
-              )
-            ],
-          );
-        }else{
-          return Center(
-            child: Text(
-              'Something Went Wrong',
-              style: TextStyle(fontSize: 20.px, color: Colors.black),
+            ):Center(
+              child: Text(
+                controller.inAsyncCall.value?'':'Something Went Wrong',
+                style: TextStyle(fontSize: 20.px, color: Colors.black),
+              ),
             ),
-          );
-        }
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.px, vertical: 24.px),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CommonWidgets.myElevatedButton(onPressed: () => controller.clickOnStartAttendanceButton(), text: 'Start Attendance',width: 42.w,backgroundColor: Colors.orange),
+                  SizedBox(width: 20.px),
+                  CommonWidgets.myElevatedButton(onPressed: () => controller.clickOnAddStudentButton(), text: 'Add Student',width: 42.w,backgroundColor: Colors.red),
+                ],
+              ),
+            )
+          ],
+        ),);
       }),
     );
   }
