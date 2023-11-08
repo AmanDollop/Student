@@ -95,13 +95,11 @@ class StudentListView extends GetView<StudentListController> {
                               controller.inAsyncCall.value
                                   ? ''
                                   : 'Something Went Wrong',
-                              style: TextStyle(
-                                  fontSize: 20.px, color: Colors.black),
+                              style: TextStyle(fontSize: 20.px, color: Colors.black),
                             ),
                           ),
                     Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 16.px, vertical: 24.px),
+                      padding: EdgeInsets.symmetric(horizontal: 16.px, vertical: 24.px),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
