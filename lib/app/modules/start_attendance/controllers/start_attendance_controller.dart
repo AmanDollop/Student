@@ -22,13 +22,12 @@ class StartAttendanceController extends GetxController {
   String? classId;
   final studentModel = Rxn<StudentModel>();
   List<StudentData>? studentData;
-  Map<String, dynamic> queryParametersForClass = {};
 
   Map<String, dynamic> bodyParamsForRegistrationApi = {};
   Map<String, dynamic> apiResponseMap = {};
   final checkApiResponseValue = false.obs;
 
-  Map<String, dynamic>studentAttendanceData={};
+  Map<String, dynamic> studentAttendanceData={};
 
   final studentNameLength = 0.obs ;
 
@@ -124,11 +123,14 @@ class StartAttendanceController extends GetxController {
 
   Future<void> clickOnSubmitAttendance() async {
     if(studentAttendanceListMap.length == studentNameLength.value){
+
       allStudentAttendance={"status":studentAttendanceListMap};
       await startStudentAttendanceApiCalling();
 
     }else{
+
       MyHttp.showSnackBar(message: 'Please Fill All Attendance.', context: Get.context!,);
+
     }
   }
 
