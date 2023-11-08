@@ -8,10 +8,10 @@ class HomeController extends GetxController {
 
   final count = 0.obs;
 
-  final id = ''.obs;
+  // final id = ''.obs;
 
   final classModel = Rxn<ClassModel>();
-  List<Data>? data;
+  List<ClassData>? classData;
   Map<String, dynamic> queryParametersForClass = {};
 
   final inAsyncCall = true.obs;
@@ -20,8 +20,8 @@ class HomeController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
     inAsyncCall.value = true;
-    id.value = await CommonMethods.getString(key: 'id') ?? '';
-    print('id::::::::::::::::   $id');
+    // id.value = await CommonMethods.getString(key: 'id') ?? '';
+    // print('id::::::::::::::::   $id');
     await getClassApi();
     inAsyncCall.value = false;
   }
@@ -39,8 +39,8 @@ class HomeController extends GetxController {
   void increment() => count.value++;
 
   void clickOnClass({required int index}) {
-    print('data?[index].classId::::::::::::    ${data?[index].classId}');
-    Get.toNamed(Routes.STUDENT_LIST,arguments: [data?[index].classId]);
+    print('data?[index].classId::::::::::::    ${classData?[index].classId}');
+    Get.toNamed(Routes.STUDENT_LIST,arguments: [classData?[index].classId]);
   }
 
   Future<void> clickOnAddClass() async {
@@ -52,13 +52,13 @@ class HomeController extends GetxController {
     try {
       classModel.value = await ApiIntegration.getClassListApi(
           context: Get.context!,
-          queryParameters: {
+          /*queryParameters: {
             'id': id.value.toString(),
-          });
+          }*/queryParameters: {});
       if (classModel.value != null) {
-        data = classModel.value?.data;
+        classData = classModel.value?.classData;
         inAsyncCall.value=false;
-        print('data::::::   $data');
+        print('data::::::   $classData');
       }
     } catch (e) {
       inAsyncCall.value=false;

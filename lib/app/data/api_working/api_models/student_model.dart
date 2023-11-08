@@ -1,47 +1,69 @@
 class StudentModel {
+  int? status;
   String? message;
-  List<StudentsList>? students;
-  bool? status;
+  List<StudentData>? studentData;
 
-  StudentModel({this.message, this.students, this.status});
+  StudentModel({this.status, this.message, this.studentData});
 
   StudentModel.fromJson(Map<String, dynamic> json) {
-    message = json['Message'];
-    if (json['students'] != null) {
-      students = <StudentsList>[];
-      json['students'].forEach((v) {
-        students!.add(StudentsList.fromJson(v));
+    status = json['status'];
+    message = json['message'];
+    if (json['studentData'] != null) {
+      studentData = <StudentData>[];
+      json['studentData'].forEach((v) {
+        studentData!.add(StudentData.fromJson(v));
       });
     }
-    status = json['status'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['Message'] = message;
-    if (students != null) {
-      data['students'] = students!.map((v) => v.toJson()).toList();
-    }
     data['status'] = status;
+    data['message'] = message;
+    if (studentData != null) {
+      data['studentData'] = studentData!.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 }
 
-class StudentsList {
-  int? studentId;
+class StudentData {
+  String? studentId;
+  String? classId;
+  String? teacherId;
   String? studentName;
+  String? createdAt;
+  String? updatedAt;
+  int? iV;
 
-  StudentsList({this.studentId, this.studentName});
+  StudentData(
+      {this.studentId,
+        this.classId,
+        this.teacherId,
+        this.studentName,
+        this.createdAt,
+        this.updatedAt,
+        this.iV});
 
-  StudentsList.fromJson(Map<String, dynamic> json) {
-    studentId = json['studentId'];
+  StudentData.fromJson(Map<String, dynamic> json) {
+    studentId = json['_id'];
+    classId = json['classId'];
+    teacherId = json['teacherId'];
     studentName = json['studentName'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+    iV = json['__v'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['studentId'] = studentId;
+    data['_id'] = studentId;
+    data['classId'] = classId;
+    data['teacherId'] = teacherId;
     data['studentName'] = studentName;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    data['__v'] = iV;
     return data;
   }
 }

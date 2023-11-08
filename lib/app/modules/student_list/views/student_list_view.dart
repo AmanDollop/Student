@@ -1,4 +1,5 @@
 import 'package:attendance_application/app/data/common_files/common_methods/Progress_bar.dart';
+import 'package:attendance_application/app/data/common_files/common_methods/common_methods.dart';
 import 'package:attendance_application/app/data/common_files/common_widgets/common_widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -18,12 +19,13 @@ class StudentListView extends GetView<StudentListController> {
       ),
       body: Obx(() {
         controller.count.value;
-        return ProgressBarForChat(inAsyncCall: controller.inAsyncCall.value, child: Stack(
+        return CommonMethods.isConnect.value?
+        ProgressBarForChat(inAsyncCall: controller.inAsyncCall.value, child: Stack(
           alignment: Alignment.bottomCenter,
           children: [
             controller.studentModel.value != null? Padding(
               padding: EdgeInsets.only(bottom: 80.px),
-              child: controller.studentsList != null && controller.studentsList!.isNotEmpty?
+              child: controller.studentData != null && controller.studentData!.isNotEmpty?
               ListView.builder(
                   padding: EdgeInsets.symmetric(horizontal: 14.px, vertical: 18.px),
                   itemBuilder: (context, index) => Container(
@@ -49,7 +51,7 @@ class StudentListView extends GetView<StudentListController> {
                             ),
                             SizedBox(width: 25.px),
                             Text(
-                              '${controller.studentsList?[index].studentName}',
+                              '${controller.studentData?[index].studentName}',
                               style: TextStyle(
                                   fontSize: 14.px,
                                   color: Colors.black,
@@ -61,7 +63,7 @@ class StudentListView extends GetView<StudentListController> {
                     ),
                   ),
                   physics: const BouncingScrollPhysics(),
-                  itemCount: controller.studentsList?.length)
+                  itemCount: controller.studentData?.length)
                   :Center(
                 child: Text(
                   controller.inAsyncCall.value?'':'No Student Found!',
@@ -86,7 +88,13 @@ class StudentListView extends GetView<StudentListController> {
               ),
             )
           ],
-        ),);
+        ),):
+        Center(
+          child: Text(
+            controller.inAsyncCall.value?'':'No Internet Connection',
+            style: TextStyle(fontSize: 22.px, color: Colors.black),
+          ),
+        );
       }),
     );
   }

@@ -7,9 +7,9 @@ class StudentListController extends GetxController {
 
   final count = 0.obs;
   final inAsyncCall =true.obs;
-  int? classId;
+  String? classId;
   final studentModel = Rxn<StudentModel>();
-  List<StudentsList>? studentsList;
+  List<StudentData>? studentData;
   Map<String, dynamic> queryParametersForClass = {};
 
   @override
@@ -17,6 +17,7 @@ class StudentListController extends GetxController {
     super.onInit();
     inAsyncCall.value = true;
     classId = Get.arguments[0];
+    print('classId::::  ${classId}');
     await getStudentApi();
     inAsyncCall.value=false;
   }
@@ -54,9 +55,9 @@ class StudentListController extends GetxController {
             'classId': classId.toString(),
           });
       if (studentModel.value != null) {
-        studentsList = studentModel.value?.students;
+        studentData = studentModel.value?.studentData;
         inAsyncCall.value=false;
-        print('studentsList::::   $studentsList');
+        print('studentsList::::   $studentData');
       }
     } catch (e) {
       inAsyncCall.value=false;

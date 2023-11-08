@@ -1,3 +1,4 @@
+import 'package:attendance_application/app/data/common_files/common_methods/common_methods.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -17,7 +18,8 @@ class StudentDetailsView extends GetView<StudentDetailsController> {
       ),
       body: Obx(() {
         controller.count.value;
-        return Stack(
+        return CommonMethods.isConnect.value?
+        Stack(
           alignment: Alignment.bottomCenter,
           children: [
              Column(
@@ -208,6 +210,12 @@ class StudentDetailsView extends GetView<StudentDetailsController> {
               ),
             )
           ],
+        ):
+        Center(
+          child: Text(
+            'No Internet Connection',
+            style: TextStyle(fontSize: 22.px, color: Colors.black),
+          ),
         );
       }),
     );

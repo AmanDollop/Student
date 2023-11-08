@@ -1,29 +1,42 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:attendance_application/app/data/common_files/common_methods/common_methods.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class MyHttp {
+
+  static void networkConnectionShowSnackBar({required BuildContext context}) {
+    showSnackBar(message: "Check Your Internet Connection", context: context);
+  }
+
   static Future<http.Response?> getMethod(
       {required String url,
         Map<String, String>? token,
         required BuildContext context}) async {
     if (kDebugMode) print("CALLING:: $url");
-    try {
-      http.Response? response = await http.get(
-        Uri.parse(url),
-        headers: token,
-      );
-      if (kDebugMode) print("CALLING:: ${response.body}");
-      // MyLogger.logger.w("CALLING:: ${response.body}");
-      return response;
-    } catch (e) {
-      if (kDebugMode) print("CALLING:: Server Down");
-      // MyLogger.logger.e("CALLING:: Server Down");
-      //MyCommonMethod.serverDownShowSnackBar(context: context);
+    if(await CommonMethods.internetConnectionCheckerMethod()){
+      try {
+        http.Response? response = await http.get(
+          Uri.parse(url),
+          headers: token,
+        );
+        if (kDebugMode) print("CALLING:: ${response.body}");
+        // MyLogger.logger.w("CALLING:: ${response.body}");
+        return response;
+      } catch (e) {
+        if (kDebugMode) print("CALLING:: Server Down");
+        // MyLogger.logger.e("CALLING:: Server Down");
+        //MyCommonMethod.serverDownShowSnackBar(context: context);
+        return null;
+      }
+    }else{
+      networkConnectionShowSnackBar(context: context);
       return null;
     }
   }
@@ -35,18 +48,23 @@ class MyHttp {
         required BuildContext context}) async {
     if (kDebugMode) print("CALLING:: $url");
     if (kDebugMode) print("BODY PARAMS:: $bodyParams");
-    try {
-      http.Response? response =
-      await http.post(Uri.parse(url), body: bodyParams, headers: token);
-      if (kDebugMode) print("CALLING:: ${response.body}");
-      return response;
-    } catch (e) {
-      if (kDebugMode) print("ERROR:: $e");
-      if (kDebugMode) print("CALLING:: Server Down");
-      // MyLogger.logger.e("CALLING:: Server Down");
-      //MyCommonMethod.serverDownShowSnackBar(context: context);
-      return null;
-    }
+   if(await CommonMethods.internetConnectionCheckerMethod()){
+     try {
+       http.Response? response =
+       await http.post(Uri.parse(url), body: bodyParams, headers: token);
+       if (kDebugMode) print("CALLING:: ${response.body}");
+       return response;
+     } catch (e) {
+       if (kDebugMode) print("ERROR:: $e");
+       if (kDebugMode) print("CALLING:: Server Down");
+       // MyLogger.logger.e("CALLING:: Server Down");
+       //MyCommonMethod.serverDownShowSnackBar(context: context);
+       return null;
+     }
+   }else{
+     networkConnectionShowSnackBar(context: context);
+     return null;
+   }
   }
 
 
@@ -59,21 +77,26 @@ class MyHttp {
         required String baseUri,
         required String endPointUri,
         required BuildContext context}) async {
-    try {
-      Uri uri = Uri.http(baseUri, endPointUri, queryParameters);
-      if (kDebugMode) print("CALLING:: $uri");
-      http.Response? response = await http.get(uri, headers: authorization);
-      if (kDebugMode) print("CALLING:: ${response.body}");
-      if (response != null) {
-        return response;
-      } else {
+    if(await CommonMethods.internetConnectionCheckerMethod()){
+      try {
+        Uri uri = Uri.https(baseUri, endPointUri, queryParameters);
+        if (kDebugMode) print("CALLING:: $uri");
+        http.Response? response = await http.get(uri, headers: authorization);
+        if (kDebugMode) print("CALLING:: ${response.body}");
+        if (response != null) {
+          return response;
+        } else {
+          return null;
+        }
+      } catch (e) {
+        if (kDebugMode) print("ERROR:: $e");
+        if (kDebugMode) print("CALLING:: Server Down");
+        // MyLogger.logger.e("CALLING:: Server Down");
+        //MyCommonMethod.serverDownShowSnackBar(context: context);
         return null;
       }
-    } catch (e) {
-      if (kDebugMode) print("ERROR:: $e");
-      if (kDebugMode) print("CALLING:: Server Down");
-      // MyLogger.logger.e("CALLING:: Server Down");
-      //MyCommonMethod.serverDownShowSnackBar(context: context);
+    }else{
+      networkConnectionShowSnackBar(context: context);
       return null;
     }
   }
@@ -88,16 +111,21 @@ class MyHttp {
         required BuildContext context}) async {
     if (kDebugMode) print("CALLING:: $url");
     if (kDebugMode) print("BODY PARAMS:: $bodyParams");
-    try {
-      http.Response? response =
-      await http.delete(Uri.parse(url), body: bodyParams, headers: token);
-      if (kDebugMode) print("CALLING:: ${response.body}");
-      return response;
-    } catch (e) {
-      if (kDebugMode) print("ERROR:: $e");
-      if (kDebugMode) print("CALLING:: Server Down");
-      // MyLogger.logger.e("CALLING:: Server Down");
-      //MyCommonMethod.serverDownShowSnackBar(context: context);
+    if(await CommonMethods.internetConnectionCheckerMethod()){
+      try {
+        http.Response? response =
+        await http.delete(Uri.parse(url), body: bodyParams, headers: token);
+        if (kDebugMode) print("CALLING:: ${response.body}");
+        return response;
+      } catch (e) {
+        if (kDebugMode) print("ERROR:: $e");
+        if (kDebugMode) print("CALLING:: Server Down");
+        // MyLogger.logger.e("CALLING:: Server Down");
+        //MyCommonMethod.serverDownShowSnackBar(context: context);
+        return null;
+      }
+    }else{
+      networkConnectionShowSnackBar(context: context);
       return null;
     }
   }
@@ -109,36 +137,40 @@ class MyHttp {
         bool wantShowFailResponse = false,
         bool wantInternetFailResponse = false}) async {
     Map<String, dynamic> responseMap = jsonDecode(response.body);
-    if (response.statusCode == StatusCodeConstant.OK) {
-      if (wantShowSuccessResponse) {
-        // ignore: use_build_context_synchronously
-        showSnackBar(message: responseMap['message'], context: context);
-      }
-      return true;
-    } else if (response.statusCode == StatusCodeConstant.BAD_REQUEST) {
-      if (wantShowFailResponse) {
-        // ignore: use_build_context_synchronously
-        showSnackBar(
-            message: responseMap['message'], context: context);
-      }
-      return false;
-    } else if (response.statusCode == StatusCodeConstant.BAD_GATEWAY) {
-      /*MyCommonMethod.showSnackBar(
+   if(await CommonMethods.internetConnectionCheckerMethod()){
+     if (response.statusCode == StatusCodeConstant.OK) {
+       if (wantShowSuccessResponse) {
+         // ignore: use_build_context_synchronously
+         showSnackBar(message: responseMap['message'], context: context);
+       }
+       return true;
+     } else if (response.statusCode == StatusCodeConstant.BAD_REQUEST) {
+       if (wantShowFailResponse) {
+         // ignore: use_build_context_synchronously
+         showSnackBar(
+             message: responseMap['message'], context: context);
+       }
+       return false;
+     } else if (response.statusCode == StatusCodeConstant.BAD_GATEWAY) {
+       /*MyCommonMethod.showSnackBar(
             message: "Something went wrong", context: context);*/
-      return false;
-    } else if (response.statusCode == StatusCodeConstant.REQUEST_TIMEOUT) {
-      /*MyCommonMethod.showSnackBar(
+       return false;
+     } else if (response.statusCode == StatusCodeConstant.REQUEST_TIMEOUT) {
+       /*MyCommonMethod.showSnackBar(
             message: "Something went wrong", context: context);*/
-      return false;
-    } else if (response.statusCode == StatusCodeConstant.NOT_FOUND) {
-      /*MyCommonMethod.showSnackBar(
+       return false;
+     } else if (response.statusCode == StatusCodeConstant.NOT_FOUND) {
+       /*MyCommonMethod.showSnackBar(
             message: "Something went wrong", context: context);*/
-      return false;
-    } else {
-      /*MyCommonMethod.showSnackBar(
+       return false;
+     } else {
+       /*MyCommonMethod.showSnackBar(
             message: "Something went wrong", context: context);*/
-      return false;
-    }
+       return false;
+     }
+   }else{
+     return false;
+   }
   }
 
   static void showSnackBar({

@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 class AddListController extends GetxController {
 
   final count = 0.obs;
-  final id = ''.obs;
+  // final id = ''.obs;
   final addClassController = TextEditingController();
   final key = GlobalKey<FormState>();
 
@@ -20,7 +20,7 @@ class AddListController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    id.value = await CommonMethods.getString(key: 'id') ?? '';
+    // id.value = await CommonMethods.getString(key: 'id') ?? '';
   }
 
   @override
@@ -47,10 +47,11 @@ class AddListController extends GetxController {
       checkApiResponseValue.value = true;
       bodyParamsForRegistrationApi = {
         'className': addClassController.text.trim().toString(),
-        'teacherId':id.value.toString()
+        // 'teacherId':id.value.toString()
       };
       http.Response? response = await ApiIntegration.addClassApi(bodyParams: bodyParamsForRegistrationApi, context: Get.context!);
       if (response != null && response.statusCode==200) {
+        print('response.statusCode::::::::::::::   ${response.statusCode}');
         apiResponseMap = jsonDecode(response.body);
         Get.back();
       } else {

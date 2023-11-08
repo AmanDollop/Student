@@ -20,7 +20,7 @@ class AddStudentListView extends GetView<AddStudentListController> {
         ),
         body: GestureDetector(
           onTap: () => CommonMethods.unFocsKeyBoard(),
-          child: Stack(
+          child: CommonMethods.isConnect.value?Stack(
             alignment: Alignment.bottomCenter,
             children: [
               Form(
@@ -53,6 +53,11 @@ class AddStudentListView extends GetView<AddStudentListController> {
                 ),
               ),
             ],
+          ): Center(
+            child: Text(
+               'No Internet Connection',
+              style: TextStyle(fontSize: 22.px, color: Colors.black),
+            ),
           ),
         ),
       );

@@ -55,16 +55,14 @@ class LoginController extends GetxController {
         'email': emailController.text.trim().toString(),
         'password': passwordController.text.trim().toString(),
         'mobileNumber': mobileNumberController.text.trim().toString(),
+        'subjectName': subjectController.text.trim().toString(),
       };
       http.Response? response = await ApiIntegration.registrationApi(bodyParams: bodyParamsForRegistrationApi, context: Get.context!);
       if (response != null && response.statusCode==200) {
         apiResponseMap = jsonDecode(response.body);
 
-        if(apiResponseMap["token"] != null ){
-          // MyHttp.showSnackBar(message: "Registered Successfully", context: Get.context!);
-          await CommonMethods.setString(key: 'userToken', value: apiResponseMap["token"].toString());
-          await CommonMethods.setString(key: 'id', value: apiResponseMap["teacherId"].toString());
-          print('apiResponseMap["token"]"::::::::::::::::::   ${apiResponseMap["token"]}');
+        if(apiResponseMap["auth"] != null ){
+          await CommonMethods.setString(key: 'userToken', value: apiResponseMap["auth"].toString());
           Get.offAllNamed(Routes.HOME);
         }else{
           checkApiResponseValue.value = false;

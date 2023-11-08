@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:attendance_application/app/data/api_working/api_models/class_model.dart';
 import 'package:attendance_application/app/data/api_working/api_models/student_model.dart';
 import 'package:attendance_application/app/data/api_working/my_http/my_http.dart';
+import 'package:attendance_application/app/data/common_files/common_methods/common_methods.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -23,7 +24,21 @@ class ApiUrlConst {
 
   static String endPointGetStudentAttendance = '/teacher/getStudentAttandance';
 
+}
 
+class ApiUrlConstFromManish {
+  static String baseUrl = 'https://students-manage.onrender.com/';
+  static String endPointGetForParam = 'students-manage.onrender.com';
+
+  static String endPointAddTeacher = '${baseUrl}api/teacherRegistrationLogin';
+  static String endPointAddClass = '${baseUrl}api/addClass';
+  static String endPointAddStudent = '${baseUrl}api/addStudent';
+  static String endPointAddAttendance = '${baseUrl}api/addAttendance';
+
+  static String endPointGetAllClasses = '${baseUrl}api/getClass';
+  static String endPointStudentList = '/api/getStudent';
+
+  static String endPointGetStudentAttendance = '/teacher/getStudentAttandance';
 
 }
 
@@ -33,11 +48,13 @@ class ApiIntegration {
     required Map<String, dynamic> bodyParams,
     required BuildContext context,
   }) async {
+
     http.Response? response = await MyHttp.postMethod(
-      url: ApiUrlConst.endPointAddTeacher,
+      url: ApiUrlConstFromManish.endPointAddTeacher,
       bodyParams: bodyParams,
       context: context,
     );
+
     if (response != null) {
       if (await MyHttp.checkResponse(
           response: response,
@@ -63,10 +80,16 @@ class ApiIntegration {
     required Map<String, dynamic> bodyParams,
     required BuildContext context,
   }) async {
+
+    Map<String, String> authorization = {};
+    String? token = await CommonMethods.getString(key: 'userToken',);
+    authorization = {"Authorization": token.toString()};
+
     http.Response? response = await MyHttp.postMethod(
-      url: ApiUrlConst.endPointAddClass,
+      url: ApiUrlConstFromManish.endPointAddClass,
       bodyParams: bodyParams,
       context: context,
+      token: authorization
     );
     if (response != null) {
       if (await MyHttp.checkResponse(
@@ -93,10 +116,16 @@ class ApiIntegration {
     required Map<String, dynamic> bodyParams,
     required BuildContext context,
   }) async {
+
+    Map<String, String> authorization = {};
+    String? token = await CommonMethods.getString(key: 'userToken',);
+    authorization = {"Authorization": token.toString()};
+
     http.Response? response = await MyHttp.postMethod(
-      url: ApiUrlConst.endPointAddStudent,
+      url: ApiUrlConstFromManish.endPointAddStudent,
       bodyParams: bodyParams,
       context: context,
+      token: authorization
     );
     if (response != null) {
       if (await MyHttp.checkResponse(
@@ -153,13 +182,16 @@ class ApiIntegration {
   static Future<ClassModel?> getClassListApi(
       {required BuildContext context,
       required Map<String, dynamic> queryParameters}) async {
+
+    Map<String, String> authorization = {};
+    String? token = await CommonMethods.getString(key: 'userToken',);
+    authorization = {"Authorization": token.toString()};
+
     ClassModel? classModel;
 
-    http.Response? response = await MyHttp.getMethodForParams(
-        endPointUri: ApiUrlConst.endPointGetAllClasses,
+    http.Response? response = await MyHttp.getMethod(
         context: context,
-        queryParameters: queryParameters,
-        baseUri: ApiUrlConst.endPointGetForParam);
+        url: ApiUrlConstFromManish.endPointGetAllClasses,token: authorization);
     if (response != null) {
       if (await MyHttp.checkResponse(response: response, context: context)) {
         classModel = ClassModel.fromJson(jsonDecode(response.body));
@@ -175,13 +207,18 @@ class ApiIntegration {
   static Future<StudentModel?> getStudentListApi(
       {required BuildContext context,
       required Map<String, dynamic> queryParameters}) async {
+
+    Map<String, String> authorization = {};
+    String? token = await CommonMethods.getString(key: 'userToken',);
+    authorization = {"Authorization": token.toString()};
+
     StudentModel? studentModel;
 
     http.Response? response = await MyHttp.getMethodForParams(
-        endPointUri: ApiUrlConst.endPointStudentList,
+        endPointUri: ApiUrlConstFromManish.endPointStudentList,
         context: context,
         queryParameters: queryParameters,
-        baseUri: ApiUrlConst.endPointGetForParam);
+        baseUri: ApiUrlConstFromManish.endPointGetForParam,authorization: authorization);
     if (response != null) {
       if (await MyHttp.checkResponse(response: response, context: context)) {
         studentModel = StudentModel.fromJson(jsonDecode(response.body));

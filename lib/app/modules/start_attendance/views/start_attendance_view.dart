@@ -1,4 +1,5 @@
 import 'package:attendance_application/app/data/common_files/common_methods/Progress_bar.dart';
+import 'package:attendance_application/app/data/common_files/common_methods/common_methods.dart';
 import 'package:attendance_application/app/data/common_files/common_widgets/common_widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +22,7 @@ class StartAttendanceView extends GetView<StartAttendanceController> {
         controller.count.value;
         return ProgressBarForChat(
           inAsyncCall: controller.inAsyncCall.value,
-          child: controller.studentModel.value != null
+          child:CommonMethods.isConnect.value? controller.studentModel.value != null
               ? Stack(
                   alignment: Alignment.bottomCenter,
                   children: [
@@ -50,8 +51,8 @@ class StartAttendanceView extends GetView<StartAttendanceController> {
                             ],
                           ),
                         ),
-                        controller.studentsList != null &&
-                                controller.studentsList!.isNotEmpty
+                        controller.studentData != null &&
+                                controller.studentData!.isNotEmpty
                             ? Expanded(
                                 child: Padding(
                                   padding: EdgeInsets.only(bottom: 80.px),
@@ -67,7 +68,7 @@ class StartAttendanceView extends GetView<StartAttendanceController> {
                                                     children: [
                                                       Expanded(
                                                         child: Text(
-                                                          '${controller.studentsList?[index].studentName}',
+                                                          '${controller.studentData?[index].studentName}',
                                                           style: TextStyle(
                                                               fontSize: 14.px,
                                                               color: Colors.black,
@@ -101,7 +102,7 @@ class StartAttendanceView extends GetView<StartAttendanceController> {
                                                                       // }
 
                                                                       controller.studentAttendanceList[index] = 'P';
-                                                                      Map<String, dynamic>test = {"${controller.studentsList?[index].studentId}": true};
+                                                                      Map<String, dynamic>test = {"${controller.studentData?[index].studentId}": true};
                                                                       controller.test1 = test;
                                                                       controller.studentAttendanceListMap.add(test);
 
@@ -140,7 +141,7 @@ class StartAttendanceView extends GetView<StartAttendanceController> {
                                                                   child: InkWell(
                                                                     onTap: () {controller.studentAttendanceList[index] = 'A';
 
-                                                                      Map<String, dynamic>test = {"${controller.studentsList?[index].studentId}": false};
+                                                                      Map<String, dynamic>test = {"${controller.studentData?[index].studentId}": false};
                                                                       controller.studentAttendanceListMap.add(test);
 
                                                                       print('controller.studentAttendanceListMap :: False:::::   ${controller.studentAttendanceListMap}');
@@ -170,7 +171,7 @@ class StartAttendanceView extends GetView<StartAttendanceController> {
                                                   ),
                                                 ),
                                         physics: const BouncingScrollPhysics(),
-                                        itemCount: controller.studentsList?.length);
+                                        itemCount: controller.studentData?.length);
                                   }),
                                 ),
                               )
@@ -201,7 +202,12 @@ class StartAttendanceView extends GetView<StartAttendanceController> {
                     controller.inAsyncCall.value ? '' : 'Something Went Wrong',
                     style: TextStyle(fontSize: 20.px, color: Colors.black),
                   ),
-                ),
+                ): Center(
+            child: Text(
+              controller.inAsyncCall.value?'':'No Internet Connection',
+              style: TextStyle(fontSize: 22.px, color: Colors.black),
+            ),
+          ),
         );
       }),
     );

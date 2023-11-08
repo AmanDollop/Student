@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:attendance_application/app/data/api_working/api/api_intrigation.dart';
-import 'package:attendance_application/app/data/common_files/common_methods/common_methods.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -9,8 +8,8 @@ import 'package:http/http.dart' as http;
 class AddStudentListController extends GetxController {
 
   final count = 0.obs;
-  final id = ''.obs;
-  int? classId;
+  // final id = ''.obs;
+  String? classId;
   final studentController =TextEditingController();
   final key = GlobalKey<FormState>();
 
@@ -21,7 +20,7 @@ class AddStudentListController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    id.value = await CommonMethods.getString(key: 'id') ?? '';
+    // id.value = await CommonMethods.getString(key: 'id') ?? '';
     classId = Get.arguments[0];
     print('classId:::::   $classId');
   }
@@ -50,7 +49,7 @@ class AddStudentListController extends GetxController {
       checkApiResponseValue.value = true;
       bodyParamsForRegistrationApi = {
         'studentName': studentController.text.trim().toString(),
-        'teacherId':id.value.toString(),
+        // 'teacherId':id.value.toString(),
         'classId':classId.toString(),
       };
       http.Response? response = await ApiIntegration.addStudentApi(bodyParams: bodyParamsForRegistrationApi, context: Get.context!);

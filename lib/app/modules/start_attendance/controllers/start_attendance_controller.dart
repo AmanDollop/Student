@@ -8,7 +8,6 @@ import 'package:http/http.dart' as http;
 class StartAttendanceController extends GetxController {
 
   final count = 0.obs;
-  List studentName =['Aman','Manish','Mahi','Sapan','Abhi'];
   List attendType =['P','A'];
 
   List studentAttendanceList = [].obs;
@@ -17,9 +16,9 @@ class StartAttendanceController extends GetxController {
 
 
   final inAsyncCall =true.obs;
-  int? classId;
+  String? classId;
   final studentModel = Rxn<StudentModel>();
-  List<StudentsList>? studentsList;
+  List<StudentData>? studentData;
   Map<String, dynamic> queryParametersForClass = {};
 
   Map<String, dynamic> bodyParamsForRegistrationApi = {};
@@ -55,12 +54,12 @@ class StartAttendanceController extends GetxController {
             'classId': classId.toString(),
           });
       if (studentModel.value != null) {
-        studentsList = studentModel.value?.students;
-        studentsList?.forEach((element) {
+        studentData = studentModel.value?.studentData;
+        studentData?.forEach((element) {
           studentAttendanceList.add('');
         });
         inAsyncCall.value=false;
-        print('studentsList::::   $studentsList');
+        print('studentData::::   $studentData');
       }
     } catch (e) {
       inAsyncCall.value=false;
@@ -71,7 +70,7 @@ class StartAttendanceController extends GetxController {
   void clickOnSubmitAttendance() {
     if(studentAttendanceListMap.isNotEmpty){
       print('hsdjfhjshdjhsfkd');
-      startStudentAttendanceApiCalling();
+      // startStudentAttendanceApiCalling();
     }
   }
 
@@ -80,7 +79,7 @@ class StartAttendanceController extends GetxController {
       checkApiResponseValue.value = true;
       bodyParamsForRegistrationApi = {
         'attandance': studentAttendanceListMap,
-        'classId':classId
+        'classId': classId
       };
       http.Response? response = await ApiIntegration.startStudentAttendanceApi(bodyParams: bodyParamsForRegistrationApi, context: Get.context!);
       if (response != null && response.statusCode==200) {
