@@ -28,11 +28,9 @@ void main() {
           themeMode: ThemeMode.light,
           theme: ThemeData(
             pageTransitionsTheme: PageTransitionsTheme(
-              builders:
-                  Map<TargetPlatform, PageTransitionsBuilder>.fromIterable(
+              builders: Map<TargetPlatform, PageTransitionsBuilder>.fromIterable(
                 TargetPlatform.values,
-                value: (dynamic _) =>
-                    const FadeUpwardsPageTransitionsBuilder(), //applying old animation
+                value: (dynamic _) => const FadeUpwardsPageTransitionsBuilder(), //applying old animation
               ),
             ),
           ),
