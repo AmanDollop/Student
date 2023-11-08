@@ -23,6 +23,7 @@ class StartAttendanceController extends GetxController {
   final studentModel = Rxn<StudentModel>();
   List<StudentData>? studentData;
 
+
   Map<String, dynamic> bodyParamsForRegistrationApi = {};
   Map<String, dynamic> apiResponseMap = {};
   final checkApiResponseValue = false.obs;
