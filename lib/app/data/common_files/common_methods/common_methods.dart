@@ -1,9 +1,11 @@
 import 'package:attendance_application/app/data/api_working/my_http/my_http.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CommonMethods extends GetxController{
@@ -94,3 +96,46 @@ class CommonMethods extends GetxController{
 
 }
 
+class CommonDialog{
+
+
+  static commonAlertDialogBox(
+      {required String title,
+        required String content,
+        required String leftButtonTitle,
+        required String rightButtonTitle,
+        required BuildContext context,
+        required VoidCallback leftButtonOnPressed,
+        required VoidCallback rightButtonOnPressed}) {
+    return CupertinoAlertDialog(
+      title: Text(
+        title,
+        style: TextStyle(fontSize: 14.px,color: Colors.black),
+      ),
+      content: Text(
+        content,
+        style: TextStyle(fontSize: 16.px,color: Colors.black),
+      ),
+      actions: [
+        CupertinoDialogAction(
+          isDefaultAction: true,
+          onPressed: leftButtonOnPressed,
+          child: Text(
+            leftButtonTitle,
+            style: TextStyle(fontSize: 14.px,color: Colors.grey),
+          ),
+        ),
+        CupertinoDialogAction(
+          isDefaultAction: true,
+          onPressed: rightButtonOnPressed,
+          child: Text(
+            rightButtonTitle,
+            style: TextStyle(fontSize: 14.px,color: Colors.blue),
+          ),
+        ),
+      ],
+      insetAnimationDuration: const Duration(seconds: 1),
+    );
+  }
+
+}

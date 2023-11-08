@@ -28,6 +28,17 @@ class LoginView extends GetView<LoginController> {
                       EdgeInsets.symmetric(horizontal: 16.px, vertical: 24.px),
                   children: [
                     SizedBox(height: 50.px),
+                    Container(
+                      height: 100.px,
+                      width: 100.px,
+                      decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('assets/svc_logo.jpeg'),
+                            fit: BoxFit.contain,
+                          ),
+                          shape: BoxShape.circle),
+                    ),
+                    SizedBox(height: 20.px),
                     Text(
                       "LogIn",
                       style: TextStyle(

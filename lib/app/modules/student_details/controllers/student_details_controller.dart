@@ -1,23 +1,29 @@
+import 'package:attendance_application/app/data/api_working/api/api_intrigation.dart';
+import 'package:attendance_application/app/data/api_working/api_models/student_detail_model.dart';
 import 'package:get/get.dart';
 
 class StudentDetailsController extends GetxController {
-
   final count = 0.obs;
-  List studentName =['01-02-2023','02-02-2023','03-02-2023','04-02-2023','05-02-2023'];
-  List attendType =['P','A'];
 
-  List studentAttendanceList = [
-    'P',
-    'A',
-    'A',
-    'P',
-    'P',
-  ].obs;
+  DateTime? dateTime;
+  List attendType = ["P", "A"];
 
+  final inAsyncCall = true.obs;
+
+  String? studentId;
+
+  final studentDetailModel = Rxn<StudentDetailModel>();
+  List<AttendanceData>? attendanceData;
+  AttendanceData? attendanceDataDate;
+  Map<String, dynamic> queryParametersForClass = {};
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
+    studentId = Get.arguments[0];
+    print('studentId:::::::::   $studentId');
+    await getStudentApi();
+    inAsyncCall.value = false;
   }
 
   @override
@@ -31,4 +37,22 @@ class StudentDetailsController extends GetxController {
   }
 
   void increment() => count.value++;
+
+  Future<void> getStudentApi() async {
+    try {
+      studentDetailModel.value = await ApiIntegration.getStudentDetailApi(
+          context: Get.context!,
+          queryParameters: {
+            'studentId': studentId.toString(),
+          });
+      if (studentDetailModel.value != null) {
+        attendanceData = studentDetailModel.value?.attendanceData;
+
+        inAsyncCall.value = false;
+      }
+    } catch (e) {
+      inAsyncCall.value = false;
+      print('ApiError:  :::   $e');
+    }
+  }
 }

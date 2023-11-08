@@ -188,9 +188,9 @@ class MyHttp {
           borderRadius: BorderRadius.circular(5.px),
         ),
         content: Text(message),
-        margin: EdgeInsets.only(left: 4.w, right: 3.w, bottom: 6.h),
+        margin: EdgeInsets.only(left: 4.w, right: 3.w, bottom: 10.h),
         behavior: SnackBarBehavior.floating,
-        dismissDirection: DismissDirection.horizontal,
+        dismissDirection: DismissDirection.vertical,
         duration: duration ?? const Duration(seconds: 2),
         backgroundColor: Colors.blue,
       );

@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:attendance_application/app/data/api_working/api/api_intrigation.dart';
 import 'package:attendance_application/app/data/api_working/api_models/class_model.dart';
 import 'package:attendance_application/app/data/common_files/common_methods/common_methods.dart';
 import 'package:attendance_application/app/routes/app_pages.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
@@ -43,9 +46,31 @@ class HomeController extends GetxController {
     onInit();
   }
 
-  void clickOnClass({required int index}) {
-    print('data?[index].classId::::::::::::    ${classData?[index].classId}');
-    Get.toNamed(Routes.STUDENT_LIST,arguments: [classData?[index].classId]);
+  willPop() {
+    showDialog(
+      context: Get.context!,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return CommonDialog.commonAlertDialogBox(
+          leftButtonOnPressed: () {
+            Navigator.pop(context);
+          },
+          rightButtonOnPressed: () {
+            exit(0);
+          },
+          title: 'Close App',
+          content: "Are you sure you want to exit the application",
+          leftButtonTitle: 'Cancel',
+          rightButtonTitle: 'Exit',
+          context: context,
+        );
+      },
+    );
+  }
+
+  Future<void> clickOnClass({required int index}) async {
+    await Get.toNamed(Routes.STUDENT_LIST,arguments: [classData?[index].classId]);
+    onInit();
   }
 
   Future<void> clickOnAddClass() async {
@@ -55,21 +80,18 @@ class HomeController extends GetxController {
 
   Future<void> getClassApi() async {
     try {
-      classModel.value = await ApiIntegration.getClassListApi(
-          context: Get.context!,
-          /*queryParameters: {
-            'id': id.value.toString(),
-          }*/queryParameters: {});
+      classModel.value = await ApiIntegration.getClassListApi(context: Get.context!,);
       if (classModel.value != null) {
         classData = classModel.value?.classData;
         inAsyncCall.value=false;
-        print('data::::::   $classData');
       }
     } catch (e) {
       inAsyncCall.value=false;
       print('ApiError::::   $e');
     }
   }
+
+
 
 
 }

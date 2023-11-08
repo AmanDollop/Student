@@ -51,8 +51,7 @@ class StartAttendanceView extends GetView<StartAttendanceController> {
                             ],
                           ),
                         ),
-                        controller.studentData != null &&
-                                controller.studentData!.isNotEmpty
+                        controller.studentData != null && controller.studentData!.isNotEmpty
                             ? Expanded(
                                 child: Padding(
                                   padding: EdgeInsets.only(bottom: 80.px),
@@ -60,9 +59,7 @@ class StartAttendanceView extends GetView<StartAttendanceController> {
                                     controller.count.value;
                                     return ListView.builder(
                                         padding: EdgeInsets.symmetric(horizontal: 14.px, vertical: 18.px),
-                                        itemBuilder:
-                                            (context, index) => Padding(
-                                                  padding: EdgeInsets.symmetric(horizontal: 12.px, vertical: 5.px),
+                                        itemBuilder: (context, index) => Padding(padding: EdgeInsets.symmetric(horizontal: 12.px, vertical: 5.px),
                                                   child: Row(
                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                     children: [
@@ -90,24 +87,7 @@ class StartAttendanceView extends GetView<StartAttendanceController> {
                                                                 child: Padding(
                                                                   padding: EdgeInsets.all(2.px),
                                                                   child: InkWell(
-                                                                    onTap: () {
-
-
-                                                                      //
-                                                                      // if(controller.studentAttendanceList[index].contains(controller.attendType[index])) {
-                                                                      //   print('111111111111111');
-                                                                      // }else{
-                                                                      //   print('222222222222222222');
-                                                                      //
-                                                                      // }
-
-                                                                      controller.studentAttendanceList[index] = 'P';
-                                                                      Map<String, dynamic>test = {"${controller.studentData?[index].studentId}": true};
-                                                                      controller.test1 = test;
-                                                                      controller.studentAttendanceListMap.add(test);
-
-                                                                      print('controller.studentAttendanceListMap:::: True:::   ${controller.studentAttendanceListMap}');
-                                                                    },
+                                                                    onTap: ()=>controller.clickOnPresent(index:index),
                                                                     child: Container(
                                                                       width: 25.px,
                                                                       height: 25.px,
@@ -139,13 +119,7 @@ class StartAttendanceView extends GetView<StartAttendanceController> {
                                                                 child: Padding(
                                                                   padding: EdgeInsets.all(2.px),
                                                                   child: InkWell(
-                                                                    onTap: () {controller.studentAttendanceList[index] = 'A';
-
-                                                                      Map<String, dynamic>test = {"${controller.studentData?[index].studentId}": false};
-                                                                      controller.studentAttendanceListMap.add(test);
-
-                                                                      print('controller.studentAttendanceListMap :: False:::::   ${controller.studentAttendanceListMap}');
-                                                                    },
+                                                                    onTap: () => controller.clickOnAbsent(index:index),
                                                                     child: Container(
                                                                       width: 25.px,
                                                                       height: 25.px,
@@ -202,7 +176,8 @@ class StartAttendanceView extends GetView<StartAttendanceController> {
                     controller.inAsyncCall.value ? '' : 'Something Went Wrong',
                     style: TextStyle(fontSize: 20.px, color: Colors.black),
                   ),
-                ): Center(
+                )
+              : Center(
             child: Text(
               controller.inAsyncCall.value?'':'No Internet Connection',
               style: TextStyle(fontSize: 22.px, color: Colors.black),

@@ -21,27 +21,39 @@ class ProfileView extends GetView<ProfileController> {
         return ProgressBarForChat(
           inAsyncCall: controller.inAsyncCall.value,
           child: Padding(
-            padding:  EdgeInsets.symmetric(horizontal: 16.px,vertical: 24.px),
-            child: Column(
+            padding: EdgeInsets.symmetric(horizontal: 16.px, vertical: 24.px),
+            child: ListView(
+              // crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                commonWidget(title:'Teacher Name',subTitle:'${controller.teacherName}'),
+                Container(
+                  height: 150.px,
+                  width: 150.px,
+                  decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/svc_logo.jpeg'),
+                        fit: BoxFit.contain,
+                      ),
+                      shape: BoxShape.circle),
+                ),
+                SizedBox(height: 50.px),
+                commonWidget(title: 'Teacher Name', subTitle: '${controller.teacherName}'),
                 SizedBox(height: 20.px),
-                commonWidget(title:'Subject Name',subTitle:'${controller.subjectName}'),
+                commonWidget(title: 'Subject Name', subTitle: '${controller.subjectName}'),
                 SizedBox(height: 20.px),
-                commonWidget(title:'Mobile No.',subTitle:'${controller.mobileNumber}'),
+                commonWidget(title: 'Mobile No.', subTitle: '${controller.mobileNumber}'),
                 SizedBox(height: 20.px),
-                commonWidget(title:'Email',subTitle:'${controller.email}'),
+                commonWidget(title: 'Email', subTitle: '${controller.email}'),
               ],
             ),
           ),
         );
-      })
+      }),
     );
   }
 
   Widget commonWidget({required String title, required String subTitle}) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Expanded(
           flex: 4,
@@ -54,6 +66,7 @@ class ProfileView extends GetView<ProfileController> {
         const Text(
           '-:',
           style: TextStyle(fontSize: 20),
+          textAlign: TextAlign.end,
         ),
         SizedBox(width: 15.px),
         Expanded(
@@ -63,7 +76,7 @@ class ProfileView extends GetView<ProfileController> {
             style: const TextStyle(fontSize: 16),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.start,
+            textAlign: TextAlign.end,
           ),
         ),
       ],
