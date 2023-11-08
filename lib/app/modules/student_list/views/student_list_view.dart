@@ -81,7 +81,11 @@ class StudentListView extends GetView<StudentListController> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  if(controller.attendance.value)
+                  if(controller.studentData != null && controller.studentData!.isNotEmpty)
                   CommonWidgets.myElevatedButton(onPressed: () => controller.clickOnStartAttendanceButton(), text: 'Start Attendance',width: 42.w,backgroundColor: Colors.orange),
+                  if(controller.attendance.value)
+                  if(controller.studentData != null && controller.studentData!.isNotEmpty)
                   SizedBox(width: 20.px),
                   CommonWidgets.myElevatedButton(onPressed: () => controller.clickOnAddStudentButton(), text: 'Add Student',width: 42.w,backgroundColor: Colors.red),
                 ],

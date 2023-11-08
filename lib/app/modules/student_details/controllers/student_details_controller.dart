@@ -10,6 +10,9 @@ class StudentDetailsController extends GetxController {
 
   final inAsyncCall = true.obs;
 
+  final present = 0.obs;
+  final absent = 0.obs;
+
   String? studentId;
 
   final studentDetailModel = Rxn<StudentDetailModel>();
@@ -21,7 +24,6 @@ class StudentDetailsController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
     studentId = Get.arguments[0];
-    print('studentId:::::::::   $studentId');
     await getStudentApi();
     inAsyncCall.value = false;
   }
@@ -47,7 +49,13 @@ class StudentDetailsController extends GetxController {
           });
       if (studentDetailModel.value != null) {
         attendanceData = studentDetailModel.value?.attendanceData;
-
+        attendanceData?.forEach((element) {
+          if (element.status!) {
+            present.value++;
+          } else {
+            absent.value++;
+          }
+        });
         inAsyncCall.value = false;
       }
     } catch (e) {

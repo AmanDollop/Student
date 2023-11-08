@@ -38,7 +38,7 @@ class ApiUrlConstFromManish {
   static String endPointGetAllClasses = '${baseUrl}api/getClass';
   static String endPointStudentList = '/api/getStudent';
 
-  static String endPointGetStudentAttendance = '/teacher/getAtandance';
+  static String endPointGetStudentAttendance = '/api/getAtandance';
 }
 
 class ApiIntegration {

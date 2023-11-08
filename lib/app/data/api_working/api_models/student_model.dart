@@ -1,13 +1,16 @@
 class StudentModel {
   int? status;
   String? message;
+  bool? isAtendanceRemaining;
   List<StudentData>? studentData;
 
-  StudentModel({this.status, this.message, this.studentData});
+  StudentModel(
+      {this.status, this.message, this.isAtendanceRemaining, this.studentData});
 
   StudentModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
+    isAtendanceRemaining = json['isAtendanceRemaining'];
     if (json['studentData'] != null) {
       studentData = <StudentData>[];
       json['studentData'].forEach((v) {
@@ -20,6 +23,7 @@ class StudentModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['status'] = status;
     data['message'] = message;
+    data['isAtendanceRemaining'] = isAtendanceRemaining;
     if (studentData != null) {
       data['studentData'] = studentData!.map((v) => v.toJson()).toList();
     }

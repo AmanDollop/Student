@@ -10,6 +10,7 @@ class StudentListController extends GetxController {
   final studentModel = Rxn<StudentModel>();
   List<StudentData>? studentData;
   Map<String, dynamic> queryParametersForClass = {};
+  final attendance=true.obs;
 
   @override
   Future<void> onInit() async {
@@ -58,8 +59,9 @@ class StudentListController extends GetxController {
           });
       if (studentModel.value != null) {
         studentData = studentModel.value?.studentData;
+        attendance.value = studentModel.value?.isAtendanceRemaining??true;
         inAsyncCall.value = false;
-        print('studentsList::::   $studentData');
+        print('studentsList::::   ${studentModel.value?.isAtendanceRemaining}');
       }
     } catch (e) {
       inAsyncCall.value = false;
