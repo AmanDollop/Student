@@ -1,6 +1,7 @@
 import 'package:attendance_application/app/data/api_working/api/api_intrigation.dart';
 import 'package:attendance_application/app/data/api_working/api_models/student_model.dart';
 import 'package:attendance_application/app/routes/app_pages.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 class StudentListController extends GetxController {
@@ -17,7 +18,6 @@ class StudentListController extends GetxController {
     super.onInit();
     inAsyncCall.value = true;
     classId = Get.arguments[0];
-    print('classId::::  ${classId}');
     await getStudentApi();
     inAsyncCall.value = false;
   }
@@ -45,7 +45,6 @@ class StudentListController extends GetxController {
   }
 
   Future<void> clickOnAddStudentButton() async {
-    print('classId  :Student::::::::::::   $classId');
     await Get.toNamed(Routes.ADD_STUDENT_LIST, arguments: [classId]);
     onInit();
   }
@@ -61,11 +60,12 @@ class StudentListController extends GetxController {
         studentData = studentModel.value?.studentData;
         attendance.value = studentModel.value?.isAtendanceRemaining??true;
         inAsyncCall.value = false;
-        print('studentsList::::   ${studentModel.value?.isAtendanceRemaining}');
       }
     } catch (e) {
       inAsyncCall.value = false;
-      print('ApiError:  :::   $e');
+      if (kDebugMode) {
+        print('ApiError:  :::   $e');
+      }
     }
   }
 }

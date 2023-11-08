@@ -1,5 +1,6 @@
 import 'package:attendance_application/app/data/api_working/api/api_intrigation.dart';
 import 'package:attendance_application/app/data/api_working/api_models/student_detail_model.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 class StudentDetailsController extends GetxController {
@@ -60,7 +61,9 @@ class StudentDetailsController extends GetxController {
       }
     } catch (e) {
       inAsyncCall.value = false;
-      print('ApiError:  :::   $e');
+      if (kDebugMode) {
+        print('ApiError:  :::   $e');
+      }
     }
   }
 }

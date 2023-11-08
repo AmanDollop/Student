@@ -14,7 +14,7 @@ class SocialLoginController extends GetxController {
     super.onInit();
     // await CommonMethods.setString(key: 'userToken',value: '');
     userToken.value = await CommonMethods.getString(key: 'userToken')??'';
-    print('user:::::::::::::::::::   $userToken');
+    // print('user:::::::::::::::::::   $userToken');
     Timer(const Duration(seconds: 3), () => clickOnGoogleButton());
   }
 

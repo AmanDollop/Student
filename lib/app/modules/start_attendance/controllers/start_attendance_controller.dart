@@ -72,7 +72,9 @@ class StartAttendanceController extends GetxController {
       }
     } catch (e) {
       inAsyncCall.value=false;
-      print('ApiError:  :::   $e');
+      if (kDebugMode) {
+        print('ApiError:  :::   $e');
+      }
     }
   }
 

@@ -4,6 +4,7 @@ import 'package:attendance_application/app/data/api_working/api/api_intrigation.
 import 'package:attendance_application/app/data/api_working/api_models/class_model.dart';
 import 'package:attendance_application/app/data/common_files/common_methods/common_methods.dart';
 import 'package:attendance_application/app/routes/app_pages.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -87,7 +88,9 @@ class HomeController extends GetxController {
       }
     } catch (e) {
       inAsyncCall.value=false;
-      print('ApiError::::   $e');
+      if (kDebugMode) {
+        print('ApiError::::   $e');
+      }
     }
   }
 

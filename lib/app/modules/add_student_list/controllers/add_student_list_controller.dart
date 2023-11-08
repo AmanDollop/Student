@@ -22,7 +22,7 @@ class AddStudentListController extends GetxController {
     super.onInit();
     // id.value = await CommonMethods.getString(key: 'id') ?? '';
     classId = Get.arguments[0];
-    print('classId:::::   $classId');
+    // print('classId:::::   $classId');
   }
 
   @override

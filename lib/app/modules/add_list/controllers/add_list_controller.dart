@@ -51,7 +51,7 @@ class AddListController extends GetxController {
       };
       http.Response? response = await ApiIntegration.addClassApi(bodyParams: bodyParamsForRegistrationApi, context: Get.context!);
       if (response != null && response.statusCode==200) {
-        print('response.statusCode::::::::::::::   ${response.statusCode}');
+        // print('response.statusCode::::::::::::::   ${response.statusCode}');
         apiResponseMap = jsonDecode(response.body);
         Get.back();
       } else {
