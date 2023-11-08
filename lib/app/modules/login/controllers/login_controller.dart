@@ -63,6 +63,10 @@ class LoginController extends GetxController {
 
         if(apiResponseMap["auth"] != null ){
           await CommonMethods.setString(key: 'userToken', value: apiResponseMap["auth"].toString());
+          await CommonMethods.setString(key: 'teacherName', value: apiResponseMap['teacherData']["teacherName"].toString());
+          await CommonMethods.setString(key: 'email', value: apiResponseMap['teacherData']["email"].toString());
+          await CommonMethods.setString(key: 'mobileNumber', value: apiResponseMap['teacherData']["mobileNumber"].toString());
+          await CommonMethods.setString(key: 'subjectName', value: apiResponseMap['teacherData']["subjectName"].toString());
           Get.offAllNamed(Routes.HOME);
         }else{
           checkApiResponseValue.value = false;

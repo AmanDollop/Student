@@ -8,6 +8,8 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../modules/profile/bindings/profile_binding.dart';
+import '../modules/profile/views/profile_view.dart';
 import '../modules/social_login/bindings/social_login_binding.dart';
 import '../modules/social_login/views/social_login_view.dart';
 import '../modules/start_attendance/bindings/start_attendance_binding.dart';
@@ -64,6 +66,11 @@ class AppPages {
       name: _Paths.STUDENT_DETAILS,
       page: () => const StudentDetailsView(),
       binding: StudentDetailsBinding(),
+    ),
+    GetPage(
+      name: _Paths.PROFILE,
+      page: () => const ProfileView(),
+      binding: ProfileBinding(),
     ),
   ];
 }

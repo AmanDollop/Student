@@ -11,6 +11,7 @@ abstract class Routes {
   static const ADD_STUDENT_LIST = _Paths.ADD_STUDENT_LIST;
   static const START_ATTENDANCE = _Paths.START_ATTENDANCE;
   static const STUDENT_DETAILS = _Paths.STUDENT_DETAILS;
+  static const PROFILE = _Paths.PROFILE;
 }
 
 abstract class _Paths {
@@ -23,4 +24,5 @@ abstract class _Paths {
   static const ADD_STUDENT_LIST = '/add-student-list';
   static const START_ATTENDANCE = '/start-attendance';
   static const STUDENT_DETAILS = '/student-details';
+  static const PROFILE = '/profile';
 }

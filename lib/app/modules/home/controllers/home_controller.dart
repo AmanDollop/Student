@@ -38,6 +38,11 @@ class HomeController extends GetxController {
 
   void increment() => count.value++;
 
+  Future<void> clickOnProfile() async {
+    await Get.toNamed(Routes.PROFILE);
+    onInit();
+  }
+
   void clickOnClass({required int index}) {
     print('data?[index].classId::::::::::::    ${classData?[index].classId}');
     Get.toNamed(Routes.STUDENT_LIST,arguments: [classData?[index].classId]);
@@ -65,4 +70,6 @@ class HomeController extends GetxController {
       print('ApiError::::   $e');
     }
   }
+
+
 }
