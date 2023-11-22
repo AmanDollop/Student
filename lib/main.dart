@@ -20,22 +20,23 @@ void main() {
           buildContext,
           orientation,
           screenType,
-        ) =>
-            GetMaterialApp(
-          title: "Application",
-          initialRoute: AppPages.INITIAL,
-          getPages: AppPages.routes,
-          themeMode: ThemeMode.light,
-          theme: ThemeData(
-            pageTransitionsTheme: PageTransitionsTheme(
-              builders: Map<TargetPlatform, PageTransitionsBuilder>.fromIterable(
-                TargetPlatform.values,
-                value: (dynamic _) => const FadeUpwardsPageTransitionsBuilder(), //applying old animation
+        ) {
+          return GetMaterialApp(
+            title: "Application",
+            initialRoute: AppPages.INITIAL,
+            getPages: AppPages.routes,
+            themeMode: ThemeMode.light,
+            theme: ThemeData(
+              pageTransitionsTheme: PageTransitionsTheme(
+                builders: Map<TargetPlatform, PageTransitionsBuilder>.fromIterable(
+                  TargetPlatform.values,
+                  value: (dynamic _) => const FadeUpwardsPageTransitionsBuilder(), //applying old animation
+                ),
               ),
             ),
-          ),
-          debugShowCheckedModeBanner: false,
-        ),
+            debugShowCheckedModeBanner: false,
+          );
+        },
       ),
     );
   });

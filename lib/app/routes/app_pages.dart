@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-
 import '../modules/add_list/bindings/add_list_binding.dart';
 import '../modules/add_list/views/add_list_view.dart';
 import '../modules/add_student_list/bindings/add_student_list_binding.dart';
@@ -18,7 +17,6 @@ import '../modules/student_details/bindings/student_details_binding.dart';
 import '../modules/student_details/views/student_details_view.dart';
 import '../modules/student_list/bindings/student_list_binding.dart';
 import '../modules/student_list/views/student_list_view.dart';
-
 part 'app_routes.dart';
 
 class AppPages {
